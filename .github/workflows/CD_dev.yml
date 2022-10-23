@@ -79,7 +79,7 @@ jobs:
   #       source: "public/res/img/dist"
   #       target: /var/www/html/clockTrainer/dev
   #       tar_tmp_path: true
-    
+
 
   dependencies: 
     runs-on: ubuntu-latest
