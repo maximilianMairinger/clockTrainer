@@ -79,7 +79,7 @@ jobs:
   #       target: /var/www/html/clockTrainer/master
   #       tar_tmp_path: true
 
-  dependencies: 
+  update_dependencies: 
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
