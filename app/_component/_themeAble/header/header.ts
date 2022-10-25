@@ -93,10 +93,10 @@ export default class Header extends ThemeAble {
     }
     })
 
+    this.pathDisplayHeaderMargin = this.atTheTop.tunnel((e) => pathDisplayHeaderMinMargin + (e ? this.additionalPathDisplay.width() : 0))
 
     
     setTimeout(() => {
-      this.pathDisplayHeaderMargin = this.atTheTop.tunnel((e) => pathDisplayHeaderMinMargin + (e ? this.additionalPathDisplay.width() : 0))
       window.on("resize", this.resizeHandler.bind(this))
     });
     
@@ -194,7 +194,7 @@ export default class Header extends ThemeAble {
   public updatePage(linkContents: string[], domainLevel: number) {
     return Promise.all([
       this.updateLinks(linkContents, domainLevel),
-      this.updatePathDisplay(domainLevel)
+      // this.updatePathDisplay(domainLevel)
     ])
   }
 
@@ -377,6 +377,8 @@ export default class Header extends ThemeAble {
           return
         }
 
+        // this.resizeHandler()
+
         return Promise.all([
           animationWrapper.anim({translateX: .1}, linkFadeInDuration + (currentLength-1) * linkAnimationOffset),
           this.currentLinkElems.anim({opacity: 1, translateX: .1}, linkFadeInDuration, linkAnimationOffset)
@@ -415,7 +417,7 @@ export default class Header extends ThemeAble {
     while (index === -1) {
       if (newSelected === "") {
         index = 0
-        break
+        return
       }
       newSelected = newSelected.substr(0, newSelected.lastIndexOf("/"))
       index = this.currentLinkContents.indexOf(newSelected)
@@ -471,6 +473,7 @@ export default class Header extends ThemeAble {
         ], slidyLineStretchDuration)
       }
     }
+
   
   }
 

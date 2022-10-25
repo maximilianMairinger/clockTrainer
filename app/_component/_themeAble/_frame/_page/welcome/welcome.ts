@@ -2,15 +2,13 @@ import { declareComponent } from "../../../../../lib/declareComponent"
 import Page from "../page"
 
 class WelcomePage extends Page {
-
+  defaultDomain = "welcome"
 
   constructor() {
     super()
   }
 
-  protected activationCallback(active: boolean): void {
-    
-  }
+
   stl() {
     return super.stl() + require("./welcome.css").toString()
   }

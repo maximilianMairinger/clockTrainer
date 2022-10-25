@@ -78,6 +78,9 @@ class NotFoundPage extends Page {
       location.replace(res)
     }
   }
+  tryNavigationCallback() {
+    return true
+  }
 
   protected activationCallback(active: boolean): void {
     

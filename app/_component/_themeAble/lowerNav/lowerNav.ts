@@ -35,8 +35,8 @@ export default declareComponent("lower-nav", class LowerNav extends ThemeAble {
   }
 
 
-  public elems: {[link: string]: HighlightAbleIcon}[]
-  public async updatePage(elems: {[link: string]: HighlightAbleIcon}[], domainLevel?: number) {
+  public elems: {[link: string]: HighlightAbleIcon}
+  public async updatePage(elems: {[link: string]: HighlightAbleIcon}, domainLevel?: number) {
     if (elems.empty) return this.hide()
     this.show()
     
@@ -75,7 +75,7 @@ export default declareComponent("lower-nav", class LowerNav extends ThemeAble {
     while (index === -1) {
       if (activeLink === "") {
         index = 0
-        break
+        return
       } 
       activeLink = activeLink.substr(0, activeLink.lastIndexOf("/"))
       index = validKeys.indexOf(activeLink)

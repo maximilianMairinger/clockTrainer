@@ -4,16 +4,8 @@ export default {
   },
   copiedFeedback: "Copied to clipboard",
   links: {
-    philosophy: "Philosophie",
-    services: "Service",
-    team: "Team",
-    contact: "Kontakt",
-    websites: "Websites",
-    contentCreation: "Inhaltserstellung",
-    privacy: "Datenschutz",
-    legalNotice: "Impressum",
-
-
+    single: "Single",
+    full: "Full",
   },
   contact: {
     note: "Du hast ein Projekt?",

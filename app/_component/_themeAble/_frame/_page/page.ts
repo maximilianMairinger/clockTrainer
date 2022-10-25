@@ -13,13 +13,12 @@ export default abstract class Page extends Frame {
     super(theme)
 
   }
-  public async tryNavigate(domainFragment?: string) {
+  public async tryNavigate(domainFragment: string) {
     let res = true
-    if (this.tryNavigationCallback) {
-      let acRes = await this.tryNavigationCallback(domainFragment)
-      if (acRes === undefined) acRes = true
-      if (!acRes) res = false
-    }
+    let acRes = await this.tryNavigationCallback(domainFragment)
+    if (acRes === undefined) acRes = true
+    if (!acRes) res = false
+
     
     return res
   }
@@ -31,7 +30,9 @@ export default abstract class Page extends Frame {
   /**
    * @return resolve Promise as soon as you know if the navigation will be successful or not. Dont wait for swap animation etc
    */
-  protected tryNavigationCallback?(domainFragment: string): boolean | void | Promise<boolean | void>
+  protected tryNavigationCallback(domainFragment: string): boolean | void | Promise<boolean | void> {
+    return this.defaultDomain === domainFragment
+  }
   protected navigationCallback?(): Promise<void>
   protected initialActivationCallback?(): boolean | void | Promise<boolean | void>
   stl() {

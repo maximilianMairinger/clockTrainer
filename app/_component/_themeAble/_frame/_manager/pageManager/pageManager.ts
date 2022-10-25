@@ -18,6 +18,16 @@ export default class PageManager extends Manager {
         ), val: () => import(/* webpackChunkName: "welcome" */"../../_page/welcome/welcome")
       },
       {
+        key: new Import("single", 10, (welcome: typeof WelcomePage) =>
+            new welcome()
+        ), val: () => import(/* webpackChunkName: "full" */"../../_page/singlePage/singlePage")
+      },
+      {
+        key: new Import("full", 10, (welcome: typeof WelcomePage) =>
+            new welcome()
+        ), val: () => import(/* webpackChunkName: "single" */"../../_page/fullPage/fullPage")
+      },
+      {
         key: new Import("", 60, (notFoundPage: typeof NotFoundPage) =>
           new notFoundPage()
         ), val: () => import(/* webpackChunkName: "notFoundPage" */"../../_page/notFound/notFound")

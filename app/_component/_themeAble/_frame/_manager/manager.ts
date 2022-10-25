@@ -235,7 +235,7 @@ export default abstract class Manager extends Frame {
 
 
     
-    this.scrollEventListener.target((to as any)).activate()
+    if (this.scrollEventListener) this.scrollEventListener.target((to as any)).activate()
 
     if (this.onUserScroll && this.onScroll) {
       
