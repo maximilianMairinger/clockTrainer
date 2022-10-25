@@ -6,11 +6,9 @@ class SinglePage extends Page {
 
   constructor() {
     super()
+
   }
 
-  protected activationCallback(active: boolean): void {
-    
-  }
   stl() {
     return super.stl() + require("./singlePage.css").toString()
   }

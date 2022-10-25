@@ -44,7 +44,7 @@ export default declareComponent("lower-nav", class LowerNav extends ThemeAble {
     this.currentLinkWrapperElems = new ElementList()
     this.currentLinkElems = new ElementList()
     for (const link in elems) {
-      let linkElem = new LowerNavLink(link, elems[link] as any as HighlightAbleIcon, domainLevel)
+      let linkElem = new LowerNavLink(link, elems[link] as any as HighlightAbleIcon, undefined, undefined, true)
       linkElem.addActivationCallback(() => {
         if (this.linkPressedCb) this.linkPressedCb()
       })

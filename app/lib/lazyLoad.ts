@@ -17,8 +17,8 @@ export default function init<Func extends () => Promise<any>>(resources: Importa
       let prom = new Promise((res) => {
         resolvements.set(imp, async (load: () => Promise<{default: {new(): any}}>, index: number, state?) => {
           const loadState = async (load: () => Promise<{default: {new(): any}}>, index: number, state?) => {
+            await instanceProm
             if (state) {
-              await instanceProm
               const stage = instance[loadedSymbol][state]
               if (!stage.started) {
                 stage.started = true
@@ -54,19 +54,18 @@ export default function init<Func extends () => Promise<any>>(resources: Importa
           for (const stage of loadStates) {
             stageOb[stage] = initStageProm()
           }
+
+          if (dontRes) {
+            instanc = instance
+            resProm = res
+          }
           
           
           if (globalInitFunc !== undefined) await globalInitFunc(instance, index);
 
           await loadState(load, index, state)
           
-          if (dontRes) {
-            instanc = instance
-            resProm = res
-          }
-          else {
-            res(instance)
-          }
+          if (!dontRes) res(instance)          
         })
       })
 

@@ -128,8 +128,8 @@ export default abstract class Manager extends Frame {
 
 
   async preloadLinks(links: {link: string, level: number}[]) {
-    const toBePreloadedLocally = [] as string[]
-    const toBePreloadedExternally = [] as string[]
+    const toBePreloadedLocally = new Set<string>()
+    const toBePreloadedExternally = new Set<string>()
     
     for (const {link, level} of links) {
       const { href, isOnOrigin} = domain.linkMeta(link, level)
@@ -140,13 +140,13 @@ export default abstract class Manager extends Frame {
       
     }
 
-    const el = await Promise.all(toBePreloadedLocally.map(async (url) => 
+    const el = await Promise.all([...toBePreloadedLocally].map(async (url) => 
       (await this.findSuitablePage(url)).pageProm.imp
     ))
     await this.importanceMap.whiteList(el, "minimalContentPaint")
     
     
-    await Promise.all(toBePreloadedExternally.map((url) => fetch(url).catch(() => {})))
+    await Promise.all([...toBePreloadedExternally].map((url) => fetch(url).catch(() => {})))
     
     
   }

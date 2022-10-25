@@ -22,7 +22,7 @@ export default class LowerNavLink extends ThemeAble {
    * @param domainLevel domainLevel the link referes to
    * @param content override language interpolation from link
    */
-  constructor(link: string, icon: HighlightAbleIcon, domainLevel?: number, content?: string | Data<string>) {
+  constructor(link: string, icon: HighlightAbleIcon, domainLevel?: number, content?: string | Data<string>, public pushOption?: boolean) {
     super()
 
     this.buttonElem.preventOnClickFocus = true
@@ -55,7 +55,7 @@ export default class LowerNavLink extends ThemeAble {
   public href(): string
   public href(href: string, domainLevel?: number): void
   public href(href?: string, domainLevel?: number): any {
-    return this.buttonElem.link(href, domainLevel, false, true)
+    return this.buttonElem.link(href, domainLevel, this.pushOption, true)
   }
 
   public content(): string

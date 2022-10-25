@@ -54,7 +54,7 @@ export default class Site extends Component {
 
       }
       
-    })
+    }, true)
 
     let navs = new ElementList<Element>(header, lowerNav)
     

@@ -1,3 +1,4 @@
+import { store } from "./../../../lib/db"
 import ThemeAble, { Theme } from "../themeAble"
 import declareComponent from "../../../lib/declareComponent"
 import "../_icon/smallLogo/smallLogo"
@@ -15,6 +16,8 @@ import keyIndex from "key-index"
 import "xtring"
 import { Data } from "josm"
 import Button from "../../_themeAble/_focusAble/_button/button"
+import "./../_focusAble/_formUi/_editAble/input/input"
+import Input from "./../_focusAble/_formUi/_editAble/input/input"
 
 
 
@@ -36,7 +39,7 @@ const pathDisplayHeaderMinMargin = 70
 
 
 export default class Header extends ThemeAble {
-  private pathDisplayElem = this.q("path-display")
+  private pathDisplayElem = this.q("c-input")
   private linkContainerElem = this.q("right-content")
   private leftContent = this.q("left-content")
   private underlineElem = new SlidyUnderline
@@ -51,7 +54,7 @@ export default class Header extends ThemeAble {
 
 
   private linksIndex = keyIndex((toggle: boolean) => keyIndex((i: number) => 
-    new Link("", "", undefined, false, true, false)
+    new Link("", "", undefined, this.pushOption, true, false)
   ))
   // private backLinkComponents: ElementList<ThemAble> = new ElementList()
 
@@ -66,9 +69,16 @@ export default class Header extends ThemeAble {
   
 
   
-  constructor(public linksShownChangeCallback?: (linksShown: boolean, init: boolean, func: any) => void) { 
+  constructor(public linksShownChangeCallback?: (linksShown: boolean, init: boolean, func: any) => void, public pushOption?: boolean) { 
     super()
-    this.linkContainerElem.apd(this.underlineElem)
+    this.linkContainerElem.apd(this.underlineElem);
+
+    const elSub = (this.body.username as Input).value.get((v) => {
+      storeSub.setToData(v)
+    }, false)
+    const storeSub = store.username.get((v) => {
+      elSub.setToData(v)
+    })
 
     this.atTheTop.get((top) => {
       if (top) {

@@ -2,6 +2,11 @@
   pointer-events: none;
 }
 
+c-input {
+  margin-left: 10px;
+  --background: 255,255,255,0;
+}
+
 component-body {
   display: flex;
   align-items: center;
