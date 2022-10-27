@@ -9,32 +9,34 @@ declare let settings: {[key in string]: any}
 window.settings = {}
 
 
+export function createLocalSettings<DefaultVal extends DefaultValType>(settingsName: Name, defaultVal: Data<DefaultVal>): Data<DefaultVal>
+export function createLocalSettings<Settings extends {[k in Key]: DefaultValType}>(settingsName: Name, defaultVal: DataBase<Settings>):  DataBase<Settings>
 export function createLocalSettings<DefaultVal extends DefaultValType>(settingsName: Name, defaultVal: DefaultVal): Data<DefaultVal>
 export function createLocalSettings<Settings extends {[k in Key]: DefaultValType}>(settingsName: Name, settingsDefault: Settings): DataBase<Settings>
-export function createLocalSettings(settingsName: Name, settingsDefault_valDefault: DefaultValType | {[k in Key]: DefaultValType}): any {
-  // if (settingsName === "localScrollPos@") debugger
-  let dat: any
-
+export function createLocalSettings(settingsName: Name, settingsDefault_valDefault: DefaultValType | Data<DefaultValType> | {[k in Key]: DefaultValType} | DataBase<{[k in Key]: DefaultValType}>): any {
   let val: any
   try {
     val = JSON.parse(localStorage[settingsName])
   }
   catch(e) {}
 
-  if (typeof settingsDefault_valDefault === "object" && settingsDefault_valDefault !== null) {
-    if (typeof val !== "object") val = undefined
-    dat = new DataBase(val, settingsDefault_valDefault)
-    dat((v: any) => {
-      localStorage[settingsName] = JSON.stringify(v)
-    }, false)
+  let dat: any
+  if (settingsDefault_valDefault instanceof DataBase || settingsDefault_valDefault instanceof Data) {
+    dat = settingsDefault_valDefault
+    if (val !== undefined) {
+      if (settingsDefault_valDefault instanceof Data) dat.set(val)
+      else dat(val)
+    }
   }
-  else {
-    dat = new Data(val, settingsDefault_valDefault)
-    dat.get((v) => {
-      localStorage[settingsName] = JSON.stringify(v)
-    }, false)
-  }
-  return settings[settingsName] =  dat
+  else dat = typeof settingsDefault_valDefault === "object" || settingsDefault_valDefault === null ? new DataBase(val, settingsDefault_valDefault as any) : new Data(typeof val !== "object" ? undefined : val, settingsDefault_valDefault)
+
+  if (dat instanceof DataBase) dat((v: any) => {
+    localStorage[settingsName] = JSON.stringify(v)
+  }, false)
+  else if (dat instanceof Data) dat.get((v: any) => {
+    localStorage[settingsName] = JSON.stringify(v)
+  }, false)
+  return settings[settingsName] = dat
 }
 
 export default createLocalSettings

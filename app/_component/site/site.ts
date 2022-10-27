@@ -15,7 +15,7 @@ import TeamIcon from "./../_themeAble/_icon/_highlightAbleIcon/team/team"
 import ContactIcon from "./../_themeAble/_icon/_highlightAbleIcon/contact/contact"
 
 
-const topLimit = 0
+const topLimit = 10
 const scrollTrendActivationCount = 20
 
 // intentionally never resolve those
@@ -30,7 +30,7 @@ export default class Site extends Component {
     
 
 
-    
+    let lastScrollProg = 0
     
 
     let lowerNav = new LowerNav()
@@ -70,6 +70,19 @@ export default class Site extends Component {
       currentSection = section
       if (currentlyShowingLowerNav) lowerNav.updateSelectedLink(section)
       header.updateSelectedLink(section)
+    }, () => {
+
+    }, (prog) => {
+      if (lastScrollProg > topLimit) {
+        if (prog <= topLimit) {
+          header.onTop()
+        }
+      }
+      else if (prog > topLimit) {
+        header.notTop()
+      }
+
+      lastScrollProg = prog
     });
 
     lowerNav.updatePage(pageIconIndex, 0)

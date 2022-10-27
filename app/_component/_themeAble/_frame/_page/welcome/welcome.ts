@@ -6,6 +6,7 @@ import "./../../../_focusAble/_formUi/_rippleButton/_blockButton/blockButton"
 import "./../../../textBlob/textBlob"
 import "./../../../../form/form"
 import store from "./../../../../../lib/db"
+import BlockButton from "./../../../_focusAble/_formUi/_rippleButton/_blockButton/blockButton"
 
 
 
@@ -20,7 +21,13 @@ class WelcomePage extends Page {
     }, false)
     const subStore = store.username.get((v) => {
       subEl.setToData(v)
+    });
+
+
+    (this.body.username as Input).isEmpty.get((v) => {
+      (this.body.btn as BlockButton).enabled.set(!v)
     })
+    
   }
 
 
