@@ -1,1 +1,21 @@
 
+component-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+main-content {
+  margin: auto;
+  width: 430px;
+  max-width: 100%;
+  padding: 5%;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+c-rando-clock {
+  margin: 5px;
+}

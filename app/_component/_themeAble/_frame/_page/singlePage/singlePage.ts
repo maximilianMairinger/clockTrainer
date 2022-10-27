@@ -1,5 +1,8 @@
 import { declareComponent } from "../../../../../lib/declareComponent"
 import Page from "../page"
+import RandoClock from "./../../../../randoClock/randoClock"
+import "./../../../../randoClock/randoClock"
+
 
 class SinglePage extends Page {
 
