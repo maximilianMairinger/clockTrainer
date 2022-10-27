@@ -11,8 +11,8 @@ const allPossibleNumberIndexes = [0,1,2,3,4,5,6,7]
 
 export default class RandoClock extends Component {
 
-  private color = new Data(undefined) as any as Data<"white" | "black">
-  private shape = new Data(undefined) as any as Data<"square" | "round">
+  public color = new Data(undefined) as any as Data<"white" | "black">
+  public shape = new Data(undefined) as any as Data<"square" | "round">
 
   private indecators: Array<HTMLElement> = new ElementList()
   constructor() {
@@ -52,7 +52,30 @@ export default class RandoClock extends Component {
       }
     })
 
+    setTimeout(() => {
+      this.turnOnmockTurning()
+    }, 1000)
+
     this.assignRandom()
+  }
+
+  setColor(color: "white" | "black") {
+    this.color.set(color)
+  }
+
+  setShape(shape: "square" | "round") {
+    this.shape.set(shape)
+  }
+
+
+  turnOnmockTurning() {
+    const currentRotation = this.body.index.css("rotateZ")
+    this.body.index.anim([{offset: 0, rotate: currentRotation}, {rotate: currentRotation + 360}], {duration: this._mockTurnSpeed, iterations: Infinity})
+  }
+
+  private _mockTurnSpeed = 1000
+  mockTurnSpeed(speed: number) {
+    this._mockTurnSpeed = speed
   }
 
   assignTimeRandom() {

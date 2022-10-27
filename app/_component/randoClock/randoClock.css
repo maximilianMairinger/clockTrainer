@@ -42,12 +42,10 @@ indecator-container {
 some-indecator {
   position: absolute;
   display: block;
-  padding-left: calc(100% - 20px);
+  padding-left: calc(100% - 22px);
 }
 
-some-indecator.long {
-  padding-left: calc(100% + 2px);
-}
+
 
 
 some-indecator > * {
@@ -59,8 +57,16 @@ small-indecator {
   height: 3px;
 }
 
+some-indecator.long {
+  padding-left: calc(100% + 2px);
+}
+
 some-indecator.long small-indecator {
   width: calc(8px + 7px);
+}
+
+some-indecator.long:has(number-indecator) {
+  padding-left: calc(100% + 9px);
 }
 
 
@@ -88,4 +94,9 @@ index-pointer {
   display: block;
   position: absolute;
   transform-origin: bottom;
+}
+
+index-pointer-container {
+  position: absolute;
+  display: block;
 }
