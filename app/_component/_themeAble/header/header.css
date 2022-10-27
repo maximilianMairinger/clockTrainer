@@ -3,7 +3,7 @@
 }
 
 c-input {
-  margin-left: 10px;
+  /* margin-left: -20px; */
   --background: 255,255,255,0;
 }
 
@@ -60,12 +60,19 @@ blurry-background.blurry {
   }
 }
 
-c-small-logo {
+.logo {
   opacity: 0;
 }
 
-c-small-logo {
+.logo {
   transition: .25s;
+}
+
+c-rando-clock {
+  transform: scale(.4);
+  transform-origin: left center;
+  margin-left: 4px;
+  margin-right: -45px;
 }
 
 c-arrow-icon {
@@ -80,6 +87,7 @@ left-content {
   margin-left: 100px;
   display: flex;
   align-items: center;
+  height: 100%;
 }
 
 left-content > * {
@@ -96,8 +104,7 @@ additional-path-display > * {
 
 
 
-left-content > c-small-logo {
-  height: 28px;
+left-content > .logo {
   position: relative;
   float: left;
 }
@@ -105,8 +112,8 @@ left-content > c-small-logo {
 c-button#homeButton {
   position: absolute;
   left: 0;
-  height: 28px;
-  width: 55px;
+  height: 100%;
+  width: 50px;
   opacity: .2;
 }
 

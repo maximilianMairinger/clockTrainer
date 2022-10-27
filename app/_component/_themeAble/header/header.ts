@@ -18,6 +18,8 @@ import { Data } from "josm"
 import Button from "../../_themeAble/_focusAble/_button/button"
 import "./../_focusAble/_formUi/_editAble/input/input"
 import Input from "./../_focusAble/_formUi/_editAble/input/input"
+import "../../randoClock/randoClock"
+import RandoClock from "../../randoClock/randoClock"
 
 
 
@@ -44,7 +46,6 @@ export default class Header extends ThemeAble {
   private leftContent = this.q("left-content")
   private underlineElem = new SlidyUnderline
   private background = this.q("blurry-background")
-  private logoIcon = this.q("c-small-logo") as Icon
 
   private pathDisplayLinkIndex = keyIndex((i: number) => {
     const ls = new ElementList<ArrowIcon | Link>(new ArrowIcon, new Link("", "", undefined, true, true, false))
@@ -94,7 +95,6 @@ export default class Header extends ThemeAble {
     
 
     this.theme.get((to) => {
-      this.logoIcon.theme.set(to)
 
       if (!this.dontChangeDisplayTheme) this.updateThemeOfPathDisplay(to)
       if (!this.dontChangeLinksTheme) {
@@ -112,7 +112,16 @@ export default class Header extends ThemeAble {
     
 
     delay(0).then(() => {
-      this.logoIcon.anim({opacity: 1}, 400);
+      this.body.logo.anim({opacity: 1}, 400);
+    });
+
+
+    this.body.logoBtn.on("mouseover", () => {
+      (this.body.logo as RandoClock).turnOnMockTurning()
+    });
+
+    this.body.logoBtn.on("mouseout", () => {
+      (this.body.logo as RandoClock).turnOffMockTurning()
     });
     
 

@@ -52,9 +52,9 @@ export default class RandoClock extends Component {
       }
     })
 
-    setTimeout(() => {
-      this.turnOnmockTurning()
-    }, 1000)
+    // setTimeout(() => {
+    //   this.turnOnMockTurning()
+    // }, 1000)
 
     this.assignRandom()
   }
@@ -68,9 +68,13 @@ export default class RandoClock extends Component {
   }
 
 
-  turnOnmockTurning() {
+  turnOnMockTurning() {
     const currentRotation = this.body.index.css("rotateZ")
-    this.body.index.anim([{offset: 0, rotate: currentRotation}, {rotate: currentRotation + 360}], {duration: this._mockTurnSpeed, iterations: Infinity})
+    const anim = this.body.index.anim([{offset: 0, rotate: currentRotation}, {rotate: currentRotation + 360}], {duration: this._mockTurnSpeed, iterations: Infinity})
+  }
+
+  turnOffMockTurning() {
+    this.body.index.anim({rotateZ: this.body.index.css("rotateZ")})
   }
 
   private _mockTurnSpeed = 1000
@@ -111,10 +115,10 @@ export default class RandoClock extends Component {
 
   assignPropsRandom() {
     this.color.set(random("white", "black"))
-    // this.shape.set(random("square", "round"))
+    this.shape.set(random("square", "round"))
 
     // this.color.set("white")
-    this.shape.set("square")
+    // this.shape.set("square")
   }
 
   assignRandom() {
