@@ -109,7 +109,7 @@ export default class RandoClock extends Component {
 
   public readonly currentTime: number
 
-  validateTime(timeToTry: number) {
+  check(timeToTry: number) {
     return this.currentTime === timeToTry
   }
 

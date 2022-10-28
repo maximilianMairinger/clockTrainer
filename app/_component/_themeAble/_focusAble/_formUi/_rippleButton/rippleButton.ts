@@ -64,6 +64,13 @@ export default class UiButton extends FormUi<Button> {
   public click?<CB extends (e?: MouseEvent | KeyboardEvent) => void>(f: CB): CB
   public click?(e?: MouseEvent | KeyboardEvent): Promise<any[]>
   public hotkey?(key: string): void
+
+  disable() {
+    this.enabled.set(false)
+  }
+  enable() {
+    this.enabled.set(true)
+  }
   
 
 

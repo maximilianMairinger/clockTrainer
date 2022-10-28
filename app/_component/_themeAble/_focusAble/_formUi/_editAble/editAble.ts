@@ -75,6 +75,15 @@ export default class EditAble extends FormUi {
       inputElem.focus()
     })
   }
+  disable() {
+    this.enabled.set(false)
+  }
+  enable() {
+    this.enabled.set(true)
+  }
+  clear() {
+    this.value.set("")
+  }
   focus() {
     this.inputElem.focus()
   }
