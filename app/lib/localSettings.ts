@@ -2,6 +2,7 @@ import { DataBase, Data } from "josm"
 
 type Key = string
 type DefaultValType = string | number | boolean
+type ObDefaultValType = {[k in Key]: DefaultValType | ObDefaultValType}
 type Name = string
 
 declare let settings: {[key in string]: any}
@@ -10,10 +11,10 @@ window.settings = {}
 
 
 export function createLocalSettings<DefaultVal extends DefaultValType>(settingsName: Name, defaultVal: Data<DefaultVal>): Data<DefaultVal>
-export function createLocalSettings<Settings extends {[k in Key]: DefaultValType}>(settingsName: Name, defaultVal: DataBase<Settings>):  DataBase<Settings>
+export function createLocalSettings<Settings extends ObDefaultValType>(settingsName: Name, defaultVal: DataBase<Settings>):  DataBase<Settings>
 export function createLocalSettings<DefaultVal extends DefaultValType>(settingsName: Name, defaultVal: DefaultVal): Data<DefaultVal>
-export function createLocalSettings<Settings extends {[k in Key]: DefaultValType}>(settingsName: Name, settingsDefault: Settings): DataBase<Settings>
-export function createLocalSettings(settingsName: Name, settingsDefault_valDefault: DefaultValType | Data<DefaultValType> | {[k in Key]: DefaultValType} | DataBase<{[k in Key]: DefaultValType}>): any {
+export function createLocalSettings<Settings extends ObDefaultValType>(settingsName: Name, settingsDefault: Settings): DataBase<Settings>
+export function createLocalSettings(settingsName: Name, settingsDefault_valDefault: DefaultValType | Data<DefaultValType> | ObDefaultValType | DataBase<ObDefaultValType>): any {
   let val: any
   try {
     val = JSON.parse(localStorage[settingsName])
@@ -32,7 +33,7 @@ export function createLocalSettings(settingsName: Name, settingsDefault_valDefau
 
   if (dat instanceof DataBase) dat((v: any) => {
     localStorage[settingsName] = JSON.stringify(v)
-  }, false)
+  }, true, false)
   else if (dat instanceof Data) dat.get((v: any) => {
     localStorage[settingsName] = JSON.stringify(v)
   }, false)

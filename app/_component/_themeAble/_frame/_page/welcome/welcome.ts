@@ -5,7 +5,7 @@ import Input from "./../../../_focusAble/_formUi/_editAble/input/input"
 import "./../../../_focusAble/_formUi/_rippleButton/_blockButton/blockButton"
 import "./../../../textBlob/textBlob"
 import "./../../../../form/form"
-import store from "./../../../../../lib/db"
+import store, { doubleLink } from "./../../../../../lib/db"
 import BlockButton from "./../../../_focusAble/_formUi/_rippleButton/_blockButton/blockButton"
 
 
@@ -16,12 +16,7 @@ class WelcomePage extends Page {
   constructor() {
     super();
 
-    const subEl = (this.body.username as Input).value.get((v) => {
-      subStore.setToData(v)
-    }, false)
-    const subStore = store.username.get((v) => {
-      subEl.setToData(v)
-    });
+    doubleLink(store.username, (this.body.username as Input).value);
 
 
     (this.body.username as Input).isEmpty.get((v) => {

@@ -4,6 +4,7 @@ import NotFoundPage from "../../_page/notFound/notFound"
 import { declareComponent } from "../../../../../lib/declareComponent"
 import HighlightAbleIcon from "../../../_icon/_highlightAbleIcon/highlightAbleIcon";
 import WelcomePage from "../../_page/welcome/welcome"
+import ModeOptionPage from "../../_page/modeOptionPage/modeOptionPage"
 
 
 
@@ -12,18 +13,28 @@ export default class PageManager extends Manager {
 
     super(new ImportanceMap<() => Promise<any>, any>(
       {
-        key: new Import("single", 10, (welcome: typeof WelcomePage) =>
-            new welcome()
-        ), val: () => import(/* webpackChunkName: "single" */"../../_page/singlePage/singlePage")
-      },
-      {
         key: new Import("selectMode", 10, (welcome: typeof WelcomePage) =>
             new welcome()
         ), val: () => import(/* webpackChunkName: "selectMode" */"../../_page/selectPage/selectPage")
       },
       {
-        key: new Import("4some", 10, (welcome: typeof WelcomePage) =>
-            new welcome()
+        key: new Import("single", 10, (page: typeof ModeOptionPage) =>
+            new page("single")
+        ), val: () => import(/* webpackChunkName: "modeOptionPage" */"../../_page/modeOptionPage/modeOptionPage")
+      },
+      {
+        key: new Import("4some", 10, (page: typeof ModeOptionPage) =>
+            new page("4some")
+        ), val: () => import(/* webpackChunkName: "modeOptionPage" */"../../_page/modeOptionPage/modeOptionPage")
+      },
+      {
+        key: new Import("single/run", 10, (page: typeof WelcomePage) =>
+            new page()
+        ), val: () => import(/* webpackChunkName: "single" */"../../_page/singlePage/singlePage")
+      },
+      {
+        key: new Import("4some/run", 10, (page: typeof WelcomePage) =>
+            new page()
         ), val: () => import(/* webpackChunkName: "4some" */"../../_page/4some/4some")
       },
       {
