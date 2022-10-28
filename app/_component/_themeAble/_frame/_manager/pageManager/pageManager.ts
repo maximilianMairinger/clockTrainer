@@ -14,7 +14,7 @@ export default class PageManager extends Manager {
       {
         key: new Import("single", 10, (welcome: typeof WelcomePage) =>
             new welcome()
-        ), val: () => import(/* webpackChunkName: "full" */"../../_page/singlePage/singlePage")
+        ), val: () => import(/* webpackChunkName: "single" */"../../_page/singlePage/singlePage")
       },
       {
         key: new Import("selectMode", 10, (welcome: typeof WelcomePage) =>
@@ -22,9 +22,9 @@ export default class PageManager extends Manager {
         ), val: () => import(/* webpackChunkName: "selectMode" */"../../_page/selectPage/selectPage")
       },
       {
-        key: new Import("full", 10, (welcome: typeof WelcomePage) =>
+        key: new Import("4some", 10, (welcome: typeof WelcomePage) =>
             new welcome()
-        ), val: () => import(/* webpackChunkName: "single" */"../../_page/fullPage/fullPage")
+        ), val: () => import(/* webpackChunkName: "4some" */"../../_page/4some/4some")
       },
       {
         key: new Import("", 10, (welcome: typeof WelcomePage) =>

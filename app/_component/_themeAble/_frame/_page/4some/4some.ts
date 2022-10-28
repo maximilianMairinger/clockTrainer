@@ -1,7 +1,7 @@
 import { declareComponent } from "../../../../../lib/declareComponent"
 import Page from "../page"
 
-class FullPage extends Page {
+class FourSomePage extends Page {
 
 
   constructor() {
@@ -12,12 +12,12 @@ class FullPage extends Page {
     
   }
   stl() {
-    return super.stl() + require("./fullPage.css").toString()
+    return super.stl() + require("./4some.css").toString()
   }
   pug() {
-    return require("./fullPage.pug").default
+    return require("./4some.pug").default
   }
 
 }
 
-export default declareComponent("full-page", FullPage)
+export default declareComponent("full-page", FourSomePage)

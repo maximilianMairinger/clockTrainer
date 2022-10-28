@@ -135,10 +135,13 @@ export default class FormUi<T extends false | HTMLElement | HTMLAnchorElement = 
     })();
 
 
-    
+    this.rippleElements = ce("button-waves");
+    this.moveBody.apd(this.rippleElements);
+
 
     this.userFeedbackMode.ripple.get((mode) => {
       if (mode) {
+        this.rippleElements.css({zIndex: "unset"})
         if (mode !== "late") {
           for (let p of preLs) {
             p.activate()
@@ -157,6 +160,7 @@ export default class FormUi<T extends false | HTMLElement | HTMLAnchorElement = 
         }
       }
       else {
+        this.rippleElements.css({zIndex: -1})
         for (let c of curLs) {
           c.deactivate()
         }
@@ -201,8 +205,6 @@ export default class FormUi<T extends false | HTMLElement | HTMLAnchorElement = 
     this.waveElement = ce("button-wave-container").apd(ce("button-wave"))
 
 
-    this.rippleElements = ce("button-waves");
-    this.moveBody.apd(this.rippleElements);
 
     
   }
@@ -337,7 +339,7 @@ export default class FormUi<T extends false | HTMLElement | HTMLAnchorElement = 
   
     
     
-    const animProm = rippleWaveElem.anim([{transform: "scale(0)", offset: 0}, {transform: "scale(" + scale + ")"}], {duration: maxDistance * 4, easing: "linear"}).then(fadeisok);
+    const animProm = rippleWaveElem.anim([{transform: "scale(0)", offset: 0}, {transform: "scale(" + scale + ")"}], {duration: 300 + maxDistance, easing: "linear"}).then(fadeisok);
 
     animProm.then(() => {
       if (this.rippleSettled === myRippleSettledProm) this.addClass("rippleSettled")

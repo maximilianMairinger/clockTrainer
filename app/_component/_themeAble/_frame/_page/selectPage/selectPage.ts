@@ -6,6 +6,8 @@ import "./../../../_focusAble/_formUi/_rippleButton/_blockButton/blockButton"
 import "./../../../textBlob/textBlob"
 import "./../../../../form/form"
 import store from "./../../../../../lib/db"
+import RippleButton from "./../../../_focusAble/_formUi/_rippleButton/rippleButton"
+import RandoClock from "./../../../../randoClock/randoClock"
 
 
 
@@ -14,6 +16,16 @@ class SelectPage extends Page {
   constructor() {
     super();
 
+    (this.q("c-ripple-button", true) as any as RippleButton[]).forEach((btn) => {
+      btn.userFeedbackMode.hover.set(false)
+      btn.userFeedbackMode.ripple.set(true);
+      (btn.childs("c-rando-clock", true) as any as RandoClock[]).forEach((clock) => {
+        setTimeout(() => {
+          clock.mockTurnSpeed(3000)
+          clock.turnOnMockTurning()
+        })
+      })
+    })
 
   }
 
