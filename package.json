@@ -87,6 +87,7 @@
     "is-safari": "^1.0.0",
     "josm": "^1.2.17",
     "slugify": "^1.6.5",
+    "tiny-delay": "^1.0.3",
     "tippy.js": "^6.3.7"
   },
   "version": "1.0.0"

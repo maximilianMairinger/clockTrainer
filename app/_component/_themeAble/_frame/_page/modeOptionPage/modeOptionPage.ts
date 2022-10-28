@@ -14,6 +14,8 @@ import LoadButton from "./../../../_focusAble/_formUi/_rippleButton/_blockButton
 import * as domain from "../../../../../lib/domain"
 
 
+export let wasHere = false
+
 
 class ModeOptionPage extends Page {
 
@@ -25,9 +27,10 @@ class ModeOptionPage extends Page {
 
 
     const initFigure = this.body.initFigure
+    // @ts-ignore
     const countdownElems = this.q("countdown-figure", true) as HTMLElement[];
-    let durInc = 500;
     (this.body.form as Form).submit(async (e) => {
+      let durInc = 500;
       await Promise.all([
         initFigure.anim({ opacity: 0, translateY: 7 }, 500),
         ...countdownElems.map((elem) => {
@@ -36,18 +39,19 @@ class ModeOptionPage extends Page {
         })
       ])
 
-      
+      wasHere = true
       domain.set("./run")
       // clean up
       setTimeout(() => {
         initFigure.css({opacity: 1, translateY: 0})
+        wasHere = false
       }, 300)
       countdownElems.forEach((elem) => elem.css({opacity: 0, translateY: 0}))
-      durInc = 500
     });
 
     (this.body.form as Form).submitElement(this.body.goBtn as any)
   }
+
 
 
   stl() {
