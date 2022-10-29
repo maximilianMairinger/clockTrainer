@@ -8,7 +8,7 @@ main-content {
   margin: auto;
   width: 535px;
   max-width: 100%;
-  padding: 5%;
+  padding: min(50px, 5%);
   box-sizing: border-box;
 }
 

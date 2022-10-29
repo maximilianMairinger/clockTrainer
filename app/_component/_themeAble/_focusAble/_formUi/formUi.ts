@@ -21,7 +21,7 @@ export default class FormUi<T extends false | HTMLElement | HTMLAnchorElement = 
   private waveElement: HTMLElement;
   public validMouseButtons = new Set([0])
 
-  protected moveBody = this.q("move-me") as HTMLElement;
+  public moveBody = this.q("move-me") as HTMLElement;
 
   public userFeedbackMode: DataBase<{
     ripple: boolean | "late",

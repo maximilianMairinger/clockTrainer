@@ -18,12 +18,21 @@ export default class Form extends Component<false> {
     if (submitElement) {
       this.submitElement(submitElement)
     }
+
+    this.on("keydown", (e) => {
+      if (e.key === "Enter") {
+        if (this._submitElement) this._submitElement.click()
+        else this.submit()
+      }
+    })
   }
   private unsubFromLastSubmitElement = () => {}
+  private _submitElement: any
   submitElement(submitElement: SelectorToButton | Button) {
     if (typeof submitElement === "string") {
       submitElement = this.childs(submitElement)
     }
+    this._submitElement = submitElement
 
     const localUnsub = this.unsubFromLastSubmitElement
     setTimeout(() => {
@@ -32,12 +41,25 @@ export default class Form extends Component<false> {
       this.unsubFromLastSubmitElement();
       const cb = (submitElement as Button).addActivationCallback(async () => {
         this.disableChilds(submitElement as Button)
-        const res = await this.submit()
-        res.push(() => {
+        const reEnableChilds = () => {
           this.enableChilds(submitElement as Button)
-        })
+        }
+        try {
+          const res = await this.submit()
+          res.push(reEnableChilds)
+  
+          return res
+        }
+        catch(e) {
+          const erAr = [reEnableChilds] as any[]
+          if (e instanceof Function) erAr.push(e)
+          else if (e instanceof Array) erAr.push(...e)
 
-        return res
+          throw erAr
+        }
+          
+ 
+        
       })
       this.unsubFromLastSubmitElement = () => {
         (submitElement as Button).removeActivationCallback(cb)
