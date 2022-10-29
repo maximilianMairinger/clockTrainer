@@ -9,6 +9,8 @@ import "./../../../_focusAble/_formUi/_rippleButton/_blockButton/blockButton"
 import Input from "./../../../_focusAble/_formUi/_editAble/input/input"
 import BlockButton from "./../../../_focusAble/_formUi/_rippleButton/_blockButton/blockButton"
 import delay from "tiny-delay"
+import * as domain from "../../../../../lib/domain"
+import { linkRecord } from "../../../link/link"
 
 
 class SinglePage extends Page {
@@ -22,9 +24,15 @@ class SinglePage extends Page {
       this.continue()
       e.preventDefault()
     }
-    // if questionmark
-    if (e.key === "?") {
+    else if (e.key === "?") {
       this.tryAnswere()
+      e.preventDefault()
+    }
+  }).deactivate()
+
+  private escLs = document.body.on("keydown", (e) => {
+    if (e.key === "Escape") {
+      domain.set("../")
     }
   }).deactivate()
 
@@ -32,6 +40,8 @@ class SinglePage extends Page {
 
   constructor() {
     super();
+
+    linkRecord.add({link: "../", level: 0});
     
     (this.btn as any).click(() => {
       this.continue()
@@ -41,17 +51,18 @@ class SinglePage extends Page {
   }
 
   async tryAnswere() {
+    this.submitted = true
     const val = this.val.value.get()
     if (this.clock.check(+val)) {
-      await this.val.anim({background: "green"})
+      await this.val.moveBody.anim({background: "#4ee44e"})
       await delay(500)
-      await this.val.anim({background: "unset"})
+      await this.val.moveBody.anim({background: ""})
       // db.score.single.add(1)
     }
     else {
-      await this.val.anim({background: "red"})
+      await this.val.moveBody.anim({background: "#ff726f"})
       await delay(500)
-      await this.val.anim({background: "unset"})
+      await this.val.moveBody.anim({background: ""})
       // db.score.single.add(-1)
     }
   }
@@ -70,9 +81,11 @@ class SinglePage extends Page {
 
 
   activationCallback(active: boolean) {
+    this.escLs.active(active)
     if (active) {
       this.btn.css({opacity: 0})
       this.val.hide()
+      this.val.disable()
       this.clock.hide()
       if (wasHere) {
         delay(350).then(() => {
@@ -94,17 +107,28 @@ class SinglePage extends Page {
     }
   }
 
+  private submitted = false
   showClock() {
     this.evLs.deactivate()
     this.clock.assignRandom()
     this.clock.show()
     delay(db.msSettings.single).then(async () => {
       this.clock.hide()
-      delay(2000).then(() => this.btn.anim({opacity: 1}))
+      let lastHintDelay: any //CancelAblePromise
+      const sub = this.val.value.get(() => {
+        if (lastHintDelay) lastHintDelay.cancel()
+        lastHintDelay = delay(lastHintDelay === undefined ? 2000 : 1000)
+        lastHintDelay.then(() => {
+          if (!this.submitted) this.btn.anim({opacity: 1})
+          else this.submitted = false
+          sub.deactivate()
+        })
+      })
+      
       this.val.clear()
-      this.val.enable()
       this.val.show()
       this.val.focus()
+      this.val.enable()
       this.evLs.activate()
     })
   }
