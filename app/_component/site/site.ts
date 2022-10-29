@@ -62,6 +62,7 @@ export default class Site extends Component {
 
     const pageIconIndex = {
       single: new ThoughtBubbleIcon(),
+      "4some": new TeamIcon(),
       full: new RocketIcon()
     }
 
