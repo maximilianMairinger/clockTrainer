@@ -12,7 +12,7 @@ c-rando-clock {
 }
 
 .panel {
-  padding: 5%;
+  padding: min(50px, 5%);
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;

@@ -7,7 +7,7 @@ component-body {
 main-content {
   margin: auto;
   width: 100%;
-  padding: 5%;
+  padding: min(50px, 5%);
   padding-top: 60px;
   padding-bottom: 100px;
   box-sizing: border-box;
