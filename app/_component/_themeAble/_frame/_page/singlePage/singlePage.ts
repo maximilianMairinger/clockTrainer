@@ -22,6 +22,10 @@ class SinglePage extends Page {
       this.continue()
       e.preventDefault()
     }
+    // if questionmark
+    if (e.key === "?") {
+      this.tryAnswere()
+    }
   }).deactivate()
 
   private countDowns = this.q(".count")
@@ -53,7 +57,7 @@ class SinglePage extends Page {
   }
 
   async continue() {
-    this.btn.disable()
+    this.btn.anim({opacity: 0})
     this.val.disable()
     await this.tryAnswere()
     this.val.hide()
@@ -67,7 +71,7 @@ class SinglePage extends Page {
 
   activationCallback(active: boolean) {
     if (active) {
-      this.btn.disable()
+      this.btn.css({opacity: 0})
       this.val.hide()
       this.clock.hide()
       if (wasHere) {
@@ -96,7 +100,7 @@ class SinglePage extends Page {
     this.clock.show()
     delay(db.msSettings.single).then(async () => {
       this.clock.hide()
-      this.btn.enable()
+      delay(2000).then(() => this.btn.anim({opacity: 1}))
       this.val.clear()
       this.val.enable()
       this.val.show()

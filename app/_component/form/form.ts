@@ -32,12 +32,25 @@ export default class Form extends Component<false> {
       this.unsubFromLastSubmitElement();
       const cb = (submitElement as Button).addActivationCallback(async () => {
         this.disableChilds(submitElement as Button)
-        const res = await this.submit()
-        res.push(() => {
+        const reEnableChilds = () => {
           this.enableChilds(submitElement as Button)
-        })
+        }
+        try {
+          const res = await this.submit()
+          res.push(reEnableChilds)
+  
+          return res
+        }
+        catch(e) {
+          const erAr = [reEnableChilds] as any[]
+          if (e instanceof Function) erAr.push(e)
+          else if (e instanceof Array) erAr.push(...e)
 
-        return res
+          throw erAr
+        }
+          
+ 
+        
       })
       this.unsubFromLastSubmitElement = () => {
         (submitElement as Button).removeActivationCallback(cb)
