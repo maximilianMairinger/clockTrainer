@@ -72,7 +72,62 @@ class FourSomePage extends GamePage {
   constructor() {
     super("4some")
 
-    this.vals.forEach((e) => {e.userFeedbackMode.focus.set(false)})
+    this.vals.forEach((e, i) => {
+      e.userFeedbackMode.focus.set(false)
+
+      let lastLength = 0
+      e.value.get((val) => {
+        this.updateContentFunc()
+        const thisLength = val.length
+        if (lastLength < thisLength) {
+          selectNext()
+        }
+        lastLength = thisLength
+      })
+
+      e.on("keydown", (ev) => {
+        //back
+        if (ev.key === "Backspace") {
+          if (e.inputElem.selectionEnd === 0) {
+            selectPrev()
+          }
+        }
+        // left
+        else if (ev.key === "ArrowLeft") {
+          if (e.inputElem.selectionStart === 0) {
+            const el = selectPrev()
+            setTimeout(() => {
+              if (el) el.select()
+            })
+          }
+        }
+        else if (ev.key === "ArrowRight") {
+          if (e.inputElem.selectionEnd === e.value.get().length) {
+            const el = selectNext()
+            setTimeout(() => {
+              if (el) el.select()
+            })
+          }
+        }
+      })
+
+
+      const selectPrev = () => {
+        if (i > 0) {
+          this.vals[i - 1].focus()
+          return this.vals[i - 1]
+        }
+      }
+      const selectNext = () => {
+        if (i < this.vals.length - 1) {
+          this.vals[i + 1].focus()
+          return this.vals[i + 1]
+        }
+      }
+      
+
+
+    })
   }
 
   
