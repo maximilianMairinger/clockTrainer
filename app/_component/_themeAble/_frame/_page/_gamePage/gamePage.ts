@@ -1,23 +1,18 @@
 import { wasHere } from "./../modeOptionPage/modeOptionPage"
 import { declareComponent } from "../../../../../lib/declareComponent"
 import Page from "../page"
-import RandoClock from "./../../../../randoClock/randoClock"
-import "./../../../../randoClock/randoClock"
 import db, { doubleLink } from "./../../../../../lib/db"
-import "./../../../_focusAble/_formUi/_editAble/input/input"
+
 import "./../../../_focusAble/_formUi/_rippleButton/_blockButton/blockButton"
-import Input from "./../../../_focusAble/_formUi/_editAble/input/input"
 import BlockButton from "./../../../_focusAble/_formUi/_rippleButton/_blockButton/blockButton"
 import delay from "tiny-delay"
 import * as domain from "../../../../../lib/domain"
 import { linkRecord } from "../../../link/link"
 
 
-class SinglePage extends Page {
+abstract class GamePage extends Page {
 
-  private clock = this.body.clock as RandoClock
   private btn = this.body.btn as BlockButton
-  private val = this.body.value as Input
 
   private evLs = document.body.on("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -25,6 +20,7 @@ class SinglePage extends Page {
       e.preventDefault()
     }
     else if (e.key === "?") {
+      this.submitted = true
       this.tryAnswere()
       e.preventDefault()
     }
@@ -46,32 +42,22 @@ class SinglePage extends Page {
     (this.btn as any).click(() => {
       this.continue()
     })
-
-    
   }
-
-  async tryAnswere() {
-    this.submitted = true
-    const val = this.val.value.get()
-    if (this.clock.check(+val)) {
-      await this.val.moveBody.anim({background: "#4ee44e"})
-      await delay(500)
-      await this.val.moveBody.anim({background: ""})
-      // db.score.single.add(1)
-    }
-    else {
-      await this.val.moveBody.anim({background: "#ff726f"})
-      await delay(500)
-      await this.val.moveBody.anim({background: ""})
-      // db.score.single.add(-1)
-    }
-  }
+  abstract tryAnswere(): any
+  abstract disableInputs(): any
+  abstract enableInputs(): any
+  abstract focusInputs(): any
+  
+  abstract clearInputs(): any
+  abstract hideClocks(): any
+  abstract showClocks(): any
+  abstract rerenderClocks(): any
 
   async continue() {
-    this.btn.anim({opacity: 0})
-    this.val.disable()
+    this.submitted = true
+    this.btn.css({pointerEvents: "none"}).anim({opacity: 0})
     await this.tryAnswere()
-    this.val.hide()
+    this.disableInputs()
     await this.body.rdy.anim([{opacity: 1, translateY: 7, offset: .1}, {opacity: 1, translateY: 13, offset: .9}, {opacity: 0, translateY: 20, offset: 1}], 1200).then(() => {
       this.body.rdy.css({translateY: 0})
     })
@@ -83,10 +69,9 @@ class SinglePage extends Page {
   activationCallback(active: boolean) {
     this.escLs.active(active)
     if (active) {
-      this.btn.css({opacity: 0})
-      this.val.hide()
-      this.val.disable()
-      this.clock.hide()
+      this.btn.css({opacity: 0, pointerEvents: "none"})
+      this.disableInputs()
+      this.hideClocks()
       if (wasHere) {
         delay(350).then(() => {
           this.showClock()
@@ -107,40 +92,47 @@ class SinglePage extends Page {
     }
   }
 
+  protected updateContentFunc = () => {}
+
   private submitted = false
   showClock() {
     this.evLs.deactivate()
-    this.clock.assignRandom()
-    this.clock.show()
+    this.rerenderClocks()
+    this.showClocks()
     delay(db.msSettings.single).then(async () => {
-      this.clock.hide()
+      this.hideClocks()
       let lastHintDelay: any //CancelAblePromise
-      const sub = this.val.value.get(() => {
+      let alreadyShown = true // gets turned false down below
+      this.submitted = false
+      this.updateContentFunc = () => {
+        if (this.submitted) return
+        if (alreadyShown) return
         if (lastHintDelay) lastHintDelay.cancel()
         lastHintDelay = delay(lastHintDelay === undefined ? 2000 : 1000)
         lastHintDelay.then(() => {
-          if (!this.submitted) this.btn.anim({opacity: 1})
-          else this.submitted = false
-          sub.deactivate()
+          alreadyShown = true
+          if (!this.submitted) this.btn.css({pointerEvents: "all"}).anim({opacity: 1})
+          this.updateContentFunc = () => {}
         })
-      })
+      }
       
-      this.val.clear()
-      this.val.show()
-      this.val.focus()
-      this.val.enable()
+      this.clearInputs()
+      alreadyShown = false
+      this.updateContentFunc()
+      this.enableInputs()
+      this.focusInputs()
       this.evLs.activate()
     })
   }
 
 
   stl() {
-    return super.stl() + require("./singlePage.css").toString()
+    return super.stl() + require("./gamePage.css").toString()
   }
   pug() {
-    return require("./singlePage.pug").default
+    return require("./gamePage.pug").default
   }
 
 }
 
-export default declareComponent("single-page", SinglePage)
+export default GamePage

@@ -58,7 +58,6 @@ component-body {
   font-family: 'Averta CY', Arial, sans-serif;
   position: absolute;
   color: rgb(59, 59, 59);
-  transition: .3s color;
   letter-spacing: .5px;
   border-radius: inherit;
 }
