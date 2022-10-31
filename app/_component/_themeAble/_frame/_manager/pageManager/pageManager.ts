@@ -30,12 +30,12 @@ export default class PageManager extends Manager {
       {
         key: new Import("single/run", 10, (page: typeof WelcomePage) =>
             new page()
-        ), val: () => import(/* webpackChunkName: "single" */"../../_page/singlePage/singlePage")
+        ), val: () => import(/* webpackChunkName: "single" */"../../_page/_gamePage/singlePage/singlePage")
       },
       {
         key: new Import("4some/run", 10, (page: typeof WelcomePage) =>
             new page()
-        ), val: () => import(/* webpackChunkName: "4some" */"../../_page/4some/4some")
+        ), val: () => import(/* webpackChunkName: "4some" */"../../_page/_gamePage/4some/4some")
       },
       {
         key: new Import("", 10, (welcome: typeof WelcomePage) =>

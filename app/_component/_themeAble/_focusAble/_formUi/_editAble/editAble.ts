@@ -15,7 +15,7 @@ export default class EditAble extends FormUi {
   protected placeholderText = ce("placeholder-text")
 
   protected placeholderUp: Data<boolean>
-  constructor(protected inputElem: HTMLInputElement | HTMLTextAreaElement, placeholder = "") {
+  constructor(public inputElem: HTMLInputElement | HTMLTextAreaElement, placeholder = "") {
     super()
     inputElem.id = "editAble"
     this.moveBody.apd(this.placeholderContainer.apd(this.placeholderText))
@@ -74,6 +74,9 @@ export default class EditAble extends FormUi {
     const clickListener = this.on("click", () => {
       inputElem.focus()
     })
+  }
+  select() {
+    this.inputElem.select()
   }
   disable() {
     this.enabled.set(false)

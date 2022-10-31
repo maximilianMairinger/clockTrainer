@@ -94,7 +94,8 @@ export default class RandoClock extends Component {
     for (const index of indexesWhereNumbersAre) {
       const el = ce("number-indecator")
       el.css({rotate: -index / (allPossibleNumberIndexes.last + 1) * 360 + 90});
-      (this.indecators[index] as HTMLElement).html(el.apd(((index + randomOffset) % (allPossibleNumberIndexes.last + 1)) + 1))
+      el.innerText = "" + (((index + randomOffset) % (allPossibleNumberIndexes.last + 1)) + 1);
+      (this.indecators[index] as HTMLElement).html(el)
     }
     for (const index of indexesWhereLinesAre) {
       const el = ce("small-indecator");

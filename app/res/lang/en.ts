@@ -4,9 +4,9 @@ export default {
   },
   copiedFeedback: "Copied to clipboard",
   links: {
-    single: "Single",
+    single: "Single Pringle",
     "4some": "4some",
-    full: "Full",
+    full: "Full house",
   },
   contact: {
     note: "Du hast ein Projekt?",
