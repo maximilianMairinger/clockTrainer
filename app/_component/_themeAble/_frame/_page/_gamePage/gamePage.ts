@@ -34,7 +34,7 @@ abstract class GamePage extends Page {
 
   private countDowns = this.q(".count")
 
-  constructor() {
+  constructor(private storeName: keyof typeof db.msSettings) {
     super();
 
     linkRecord.add({link: "../", level: 0});
@@ -99,7 +99,7 @@ abstract class GamePage extends Page {
     this.evLs.deactivate()
     this.rerenderClocks()
     this.showClocks()
-    delay(db.msSettings.single).then(async () => {
+    delay(db.msSettings[this.storeName]).then(async () => {
       this.hideClocks()
       let lastHintDelay: any //CancelAblePromise
       let alreadyShown = true // gets turned false down below

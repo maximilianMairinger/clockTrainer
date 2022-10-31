@@ -35,7 +35,7 @@ class SinglePage extends GamePage {
 
 
   constructor() {
-    super();
+    super("single");
     this.body.gameContainer.append(this.clock, this.val);
 
     this.val.userFeedbackMode.focus.set(false)
