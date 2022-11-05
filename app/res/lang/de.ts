@@ -1,6 +1,6 @@
 export default {
   xcenic: {
-    longName: "Xcenic"
+    longName: "Clock Trainer"
   },
   copiedFeedback: "Copied to clipboard",
   links: {
