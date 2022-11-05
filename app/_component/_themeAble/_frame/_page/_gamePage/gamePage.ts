@@ -58,7 +58,7 @@ abstract class GamePage extends Page {
     this.btn.css({pointerEvents: "none"}).anim({opacity: 0})
     await this.tryAnswere()
     this.disableInputs()
-    await this.body.rdy.anim([{opacity: 1, translateY: 7, offset: .1}, {opacity: 1, translateY: 13, offset: .9}, {opacity: 0, translateY: 20, offset: 1}], 1200).then(() => {
+    await this.body.rdy.anim([{opacity: 1, translateY: 7, offset: .1}, {opacity: 1, translateY: 13, offset: .9}, {opacity: 0, translateY: 20, offset: 1}], 600).then(() => {
       this.body.rdy.css({translateY: 0})
     })
     await delay(250)
